@@ -4,9 +4,9 @@ import androidx.annotation.DrawableRes
 import com.example.newsapp3.R
 
 data class Page(
-    val title:String,
-    val description:String,
-    @DrawableRes val image:Int
+    val title:String="",
+    val description:String="",
+    @DrawableRes val image:Int=0
 )
 
 

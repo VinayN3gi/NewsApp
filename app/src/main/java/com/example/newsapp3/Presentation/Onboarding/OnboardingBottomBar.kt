@@ -64,7 +64,7 @@ fun previousClick(currentScreen:MutableState<Int>)
 
 
 @Composable
-fun OnBoardingBottomRow(modifier: Modifier,currentScreen:MutableState<Int>)
+fun OnBoardingBottomRow(modifier: Modifier,currentScreen:Int,onNext:()->Unit,onPrev:()->Unit)
 {
 
     Row(modifier = modifier
@@ -73,14 +73,14 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:MutableState<Int>)
         .padding(horizontal = 24.dp))
     {
 
-        if(currentScreen.value > 0)
+        if(currentScreen > 0)
         {
             Row(modifier = Modifier.fillMaxHeight().fillMaxWidth(.3f), verticalAlignment = Alignment.CenterVertically)
             {
                 Button(
-                    onClick = { previousClick(currentScreen)},
+                    onClick = { onPrev()},
                     shape = MaterialTheme.shapes.small,
-                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
+                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
                 )
                 {
                     Text(text="Back", color = Color.White)
@@ -91,16 +91,16 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:MutableState<Int>)
             Row(modifier = Modifier.fillMaxHeight().fillMaxWidth(.5f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
             {
                 Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(
-                    circleColor(0,currentScreen.value)))
+                    circleColor(0,currentScreen)))
                 Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(
-                    circleColor(1,currentScreen.value)))
-                Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(circleColor(2,currentScreen.value)))
+                    circleColor(1,currentScreen)))
+                Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(circleColor(2,currentScreen)))
 
             }
 
             Row(modifier=Modifier.fillMaxHeight().fillMaxWidth(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End)
             {
-                Button(onClick = { nextClick(currentScreen) },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = Color.Blue))
+                Button(onClick = { onNext() },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary))
                 {
                     Text(text="Next", color = Color.White)
                 }
@@ -115,17 +115,17 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:MutableState<Int>)
             .fillMaxWidth(.3f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.SpaceBetween)
         {
             Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(
-                circleColor(0,currentScreen.value)))
+                circleColor(0,currentScreen)))
             Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(
-                circleColor(1,currentScreen.value)))
-            Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(circleColor(2,currentScreen.value)))
+                circleColor(1,currentScreen)))
+            Image(imageVector = CircleFilled, contentDescription = null,modifier = Modifier.size(30.dp), colorFilter = ColorFilter.tint(circleColor(2,currentScreen)))
 
         }
         Row(modifier = Modifier
             .fillMaxHeight()
             .fillMaxWidth(1f), horizontalArrangement = Arrangement.End, verticalAlignment = Alignment.CenterVertically)
         {
-            Button(onClick = { nextClick(currentScreen) },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = Color.Blue))
+            Button(onClick = { onNext() },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = Color.Blue))
             {
                 Text(text="Next", color = Color.White)
             }
@@ -135,18 +135,4 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:MutableState<Int>)
 }
 
 
-@Composable
-@Preview(showSystemUi = true, showBackground = true)
-fun BottomRowPreview()
-{
-    val currentScreen= remember { mutableStateOf<Int>(0) }
-    Column(modifier = Modifier
-        .fillMaxSize()
-        .systemBarsPadding()
-        .navigationBarsPadding()) {
-        Spacer(modifier = Modifier.height(50.dp))
 
-        OnBoardingBottomRow(modifier = Modifier,currentScreen)
-
-    }
-}

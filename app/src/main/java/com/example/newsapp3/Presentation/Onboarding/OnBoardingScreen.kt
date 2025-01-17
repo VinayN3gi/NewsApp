@@ -15,6 +15,8 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
@@ -26,24 +28,27 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.navigation.compose.hiltViewModel
 import com.example.newsapp3.R
 
 
 @Composable
 fun OnBoardingScreen(
-    modifier: Modifier,page: Page )
+    modifier: Modifier,page: Page,viewModel: OnBoardingViewModel= hiltViewModel())
 {
-    val currentScreen= remember { mutableStateOf<Int>(0) }
+
+    val state by viewModel.state.collectAsState()
+    val currentScreen by viewModel.currentScreen.collectAsState()
     Column(modifier = Modifier
         .fillMaxSize().fillMaxHeight()
         .navigationBarsPadding().background(MaterialTheme.colorScheme.background)) {
-        Column(modifier=Modifier.fillMaxWidth()) {
+        Column(modifier=Modifier.fillMaxWidth().fillMaxHeight(.85f)) {
 
             Column(modifier=Modifier
                 .fillMaxWidth()
-                .fillMaxHeight(.6f)) {
+                .fillMaxHeight(.7f)) {
                 Image(
-                    painter = painterResource(id = OnBoardingPageList[currentScreen.value].image),
+                    painter = painterResource(id = state.image),
                     contentDescription = "OnBoarding Image",
                     contentScale = ContentScale.Crop,
                     modifier = Modifier.fillMaxSize()
@@ -53,7 +58,7 @@ fun OnBoardingScreen(
             Spacer(modifier=Modifier.height(Dimensions.mediumPadding1))
 
             Text(
-                text = OnBoardingPageList[currentScreen.value].title,
+                text = state.title,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Dimensions.mediumPadding2),
@@ -64,7 +69,7 @@ fun OnBoardingScreen(
             Spacer(modifier=Modifier.height(Dimensions.mediumPadding2))
 
             Text(
-                text = OnBoardingPageList[currentScreen.value].description,
+                text = state.description,
                 modifier = Modifier
                     .fillMaxWidth()
                     .padding(horizontal = Dimensions.mediumPadding2),
@@ -75,11 +80,10 @@ fun OnBoardingScreen(
             //OnBoardingBottomRow(modifier=Modifier,currentScreen)
         }
 
-        Column(verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().height(150.dp))
+        Column(verticalArrangement = Arrangement.Center, modifier = Modifier.fillMaxWidth().fillMaxHeight(1f))
         {
-            OnBoardingBottomRow(modifier=Modifier,currentScreen)
+            OnBoardingBottomRow(modifier=Modifier,currentScreen,{viewModel.nextClick()},{viewModel.previousClick()})
         }
-
 
     }
 

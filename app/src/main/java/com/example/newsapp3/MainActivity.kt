@@ -15,7 +15,10 @@ import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import com.example.newsapp3.Presentation.Onboarding.OnBoardingPageList
 import com.example.newsapp3.Presentation.Onboarding.OnBoardingScreen
 import com.example.newsapp3.ui.theme.NewsAPP3Theme
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

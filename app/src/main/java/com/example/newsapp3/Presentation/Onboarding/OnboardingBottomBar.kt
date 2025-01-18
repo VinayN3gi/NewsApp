@@ -42,7 +42,7 @@ fun circleColor(circleNo:Int,selectedCircleNo:Int):Color
 }
 
 
-fun nextClick(currentScreen:MutableState<Int>)
+/*fun nextClick(currentScreen:MutableState<Int>)
 {
     if(currentScreen.value<2)
     {
@@ -59,13 +59,15 @@ fun previousClick(currentScreen:MutableState<Int>)
     {
         currentScreen.value--
     }
-}
+}*/
 
 
 
 @Composable
 fun OnBoardingBottomRow(modifier: Modifier,currentScreen:Int,onNext:()->Unit,onPrev:()->Unit)
 {
+    //val text = if (currentScreen == 2) "Get Started" else "Next"
+
 
     Row(modifier = modifier
         .fillMaxWidth()
@@ -80,7 +82,7 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:Int,onNext:()->Unit,onP
                 Button(
                     onClick = { onPrev()},
                     shape = MaterialTheme.shapes.small,
-                    colors = ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary)
+                    colors = ButtonDefaults.buttonColors(containerColor = Color.Blue)
                 )
                 {
                     Text(text="Back", color = Color.White)
@@ -100,9 +102,9 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:Int,onNext:()->Unit,onP
 
             Row(modifier=Modifier.fillMaxHeight().fillMaxWidth(1f), verticalAlignment = Alignment.CenterVertically, horizontalArrangement = Arrangement.End)
             {
-                Button(onClick = { onNext() },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = MaterialTheme.colorScheme.primary))
+                Button(onClick = { onNext() },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = Color.Blue))
                 {
-                    Text(text="Next", color = Color.White)
+                    Text(text=if (currentScreen == 2) "Start" else "Next", color = Color.White)
                 }
             }
 
@@ -127,7 +129,7 @@ fun OnBoardingBottomRow(modifier: Modifier,currentScreen:Int,onNext:()->Unit,onP
         {
             Button(onClick = { onNext() },shape = MaterialTheme.shapes.small, colors =ButtonDefaults.buttonColors(containerColor = Color.Blue))
             {
-                Text(text="Next", color = Color.White)
+                Text(text= if (currentScreen == 2) "Get Started" else "Next", color = Color.White)
             }
         }
     }}
